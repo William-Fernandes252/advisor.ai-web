@@ -1,0 +1,11 @@
+{
+	"[vue][html][javascript][typescript][scss][css][json][javascriptreact][typescriptreact][jsonc][yaml]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.codeActionsOnSave": {
+			"quickfix.biome": "explicit",
+			"source.organizeImports": "always"
+		}
+	}
+}
