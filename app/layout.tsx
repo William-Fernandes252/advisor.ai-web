@@ -1,11 +1,7 @@
-import { auth } from "@/auth";
-import AppBar from "@/components/feedback/app-bar";
 import theme from "@/lib/theme";
-import { Container } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
-import type { User } from "next-auth";
 
 export const metadata: Metadata = {
 	title: "advisor.ai",
@@ -18,17 +14,11 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const session = await auth();
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body>
+			<body style={{ height: "90vh" }}>
 				<AppRouterCacheProvider>
-					<ThemeProvider theme={theme}>
-						<Container maxWidth="xl">
-							<AppBar user={session?.user as User} />
-							{children}
-						</Container>
-					</ThemeProvider>
+					<ThemeProvider theme={theme}>{children}</ThemeProvider>
 				</AppRouterCacheProvider>
 			</body>
 		</html>

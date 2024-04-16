@@ -13,6 +13,18 @@ type TokenObtainPairPayload = {
 	password: string;
 };
 
+type TokenObtainPairResponse = {
+	/**
+	 * Token de acesso.
+	 */
+	access: string;
+
+	/**
+	 * Token de atualização.
+	 */
+	refresh: string;
+};
+
 /**
  * Obtém um par de tokens de acesso e atualização.
  *
@@ -21,10 +33,10 @@ type TokenObtainPairPayload = {
  * @returns Tokens de acesso e atualização.
  * @throws {NotFoundError} Se o recurso solicitado não foi encontrado.
  */
-export default async function tokenObtainPair(
+export default async function postTokenObtainPair(
 	data: TokenObtainPairPayload,
 	axios: Axios,
-): Promise<{ access: string; refresh: string }> {
+): Promise<TokenObtainPairResponse> {
 	try {
 		return (await axios.post("/token/", data)).data;
 	} catch (error) {

@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, type BoxProps } from "@mui/material";
 
 export default function Page({
 	children,
-}: Readonly<{ children: React.ReactNode }>) {
+	...props
+}: Readonly<Omit<BoxProps, "component">>) {
 	return (
-		<Box component="main" sx={{ p: 3 }}>
+		<Box component="main" sx={{ p: 3, m: 0 }} {...props}>
 			{children}
 		</Box>
 	);
