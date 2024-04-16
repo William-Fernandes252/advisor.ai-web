@@ -12,7 +12,8 @@
     "check:ci": "biome ci .",
     "test": "vitest",
     "test:ci": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -45,6 +46,7 @@
     "@types/react-dom": "^18",
     "@types/validator": "^13.11.9",
     "@vitejs/plugin-react": "^4.2.1",
+    "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "typescript": "^5",
     "vitest": "^1.5.0"
