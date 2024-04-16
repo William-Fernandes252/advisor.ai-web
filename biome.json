@@ -11,5 +11,10 @@
 	},
 	"files": {
 		"ignore": [".next/*"]
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"defaultBranch": "develop"
 	}
 }
