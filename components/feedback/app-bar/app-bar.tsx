@@ -1,20 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import BaseAppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import Drawer from "@/components/navigation/drawer";
+import LinkButton from "@/components/navigation/link-button";
 import {
 	AccountCircleOutlined,
-	SpaceDashboard,
 	LibraryBooks,
-	PersonAdd,
 	Login,
+	LogoutOutlined,
+	PersonAdd,
+	SpaceDashboard,
 } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
 	Avatar,
 	Button,
@@ -23,12 +19,16 @@ import {
 	MenuItem,
 	useTheme,
 } from "@mui/material";
-import { LogoutOutlined } from "@mui/icons-material";
-import Drawer from "@/components/navigation/drawer";
+import BaseAppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import ListItemText from "@mui/material/ListItemText";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import type { User } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import LinkButton from "@/components/navigation/link-button";
+import { useState } from "react";
 
 const drawerWidth = 240;
 

@@ -1,7 +1,7 @@
-import { BaseError } from ".";
 import type { AxiosError } from "axios";
+import { BaseError } from ".";
 
-class HttpError extends BaseError {
+export class HttpError extends BaseError {
 	readonly status: number;
 
 	constructor(options: {

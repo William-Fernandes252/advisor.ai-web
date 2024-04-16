@@ -1,11 +1,12 @@
-import NextAuth, { type DefaultSession, type User } from "next-auth";
+import postTokenObtainPair from "@/http/post-token-obtain-pair";
+import { axiosInstance } from "@/lib/axios";
+import jwt from "jsonwebtoken";
+import NextAuth, { type DefaultSession } from "next-auth";
+import type { DefaultJWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { ZodError } from "zod";
-import { axiosInstance } from "@/lib/axios";
-import tokenObtainPair from "@/http/token-obtain-pair";
-import jwt from "jsonwebtoken";
+import { UnauthorizedError } from "./errors/http";
 import { signInSchema } from "./lib/schemas";
-import type { DefaultJWT } from "next-auth/jwt";
 
 declare module "next-auth" {
 	interface JWT {
@@ -47,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				try {
 					const { email, password } = signInSchema.parse(credentials);
 
-					const { access, refresh } = await tokenObtainPair(
+					const { access, refresh } = await postTokenObtainPair(
 						{ email, password },
 						axiosInstance,
 					);
@@ -73,7 +74,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 						},
 					};
 				} catch (error) {
-					if (error instanceof ZodError) {
+					if (error instanceof ZodError || error instanceof UnauthorizedError) {
 						return null;
 					}
 					throw error;
@@ -91,5 +92,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			}
 			return session;
 		},
+	},
+	pages: {
+		signIn: "/login",
 	},
 });
