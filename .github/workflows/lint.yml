@@ -11,15 +11,15 @@ name: Biome check
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: ["main", "develop"]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main", "develop" ]
+    branches: ["main", "develop"]
   schedule:
-    - cron: '21 21 * * 4'
+    - cron: "21 21 * * 4"
 
 jobs:
-  eslint:
+  biome:
     name: Run biome checks
     runs-on: ubuntu-latest
     permissions:
@@ -37,5 +37,5 @@ jobs:
           pnpm add @biomejs/biome@1.6.4
 
       - name: Run Biome
-        run: pnpm run ci
+        run: pnpm run check:ci
         continue-on-error: false
