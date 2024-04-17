@@ -1,22 +1,26 @@
+import theme from "@/lib/theme";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "advisor.ai",
-  description:
-    "Article search and recommendation platform focused on promoting collaboration between researchers using AI",
+	title: "advisor.ai",
+	description:
+		"Article search and recommendation platform focused on promoting collaboration between researchers using AI",
 };
 
-export default function RootLayout({
-  children,
+export default async function RootLayout({
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+	return (
+		<html lang="en" suppressHydrationWarning>
+			<body style={{ height: "90vh" }}>
+				<AppRouterCacheProvider>
+					<ThemeProvider theme={theme}>{children}</ThemeProvider>
+				</AppRouterCacheProvider>
+			</body>
+		</html>
+	);
 }
