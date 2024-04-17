@@ -2,7 +2,6 @@ import postTokenObtainPair from "@/http/post-token-obtain-pair";
 import { axiosInstance } from "@/lib/axios";
 import jwt from "jsonwebtoken";
 import NextAuth, { type DefaultSession } from "next-auth";
-import type { DefaultJWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { ZodError } from "zod";
 import { UnauthorizedError } from "./errors/http";
@@ -19,21 +18,16 @@ declare module "next-auth" {
 		email: string;
 		name: string;
 		groups: string[];
+		jwt?: string;
 	}
 	interface Session {
 		user: {
 			date_joined: string;
 			groups: string[];
 			phone_number: string;
-			_jwt: {
-				exp: number;
-				iat: number;
-				sub: string;
-				access: string;
-				refresh: string;
-			};
+			jwt: string;
 		} & Omit<DefaultSession["user"], "image">;
-		jwt: DefaultJWT;
+		jwt: string;
 	}
 }
 
@@ -48,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				try {
 					const { email, password } = signInSchema.parse(credentials);
 
-					const { access, refresh } = await postTokenObtainPair(
+					const { access } = await postTokenObtainPair(
 						{ email, password },
 						axiosInstance,
 					);
@@ -65,13 +59,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 						date_joined: payload.date_joined,
 						groups: payload.groups,
 						phone_number: payload.phone_number,
-						_jwt: {
-							exp: payload.exp,
-							iat: payload.iat,
-							sub: payload.sub,
-							access,
-							refresh,
-						},
+						jwt: access,
 					};
 				} catch (error) {
 					if (error instanceof ZodError || error instanceof UnauthorizedError) {
@@ -83,12 +71,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		}),
 	],
 	callbacks: {
-		jwt: async ({ token }) => {
+		jwt: async ({ token, user }) => {
+			if (user) {
+				// @ts-ignore
+				return { ...token, jwt: user.jwt };
+			}
 			return token;
 		},
 		session: async ({ session, token }) => {
-			if (token) {
-				session.jwt = token;
+			if (typeof token?.jwt === "string") {
+				session.jwt = token.jwt;
 			}
 			return session;
 		},

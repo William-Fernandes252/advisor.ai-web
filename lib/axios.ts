@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import axios from "axios";
-import { cookies } from "next/headers";
 
 export const axiosInstance = axios.create({
 	baseURL: process.env.API_BASE_URL,
