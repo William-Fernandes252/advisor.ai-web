@@ -19,13 +19,14 @@ declare module "next-auth" {
 		name: string;
 		groups: string[];
 		jwt?: string;
+		expires?: number;
 	}
-	interface Session {
+	interface Session extends DefaultSession {
 		user: {
 			date_joined: string;
 			groups: string[];
 			phone_number: string;
-			jwt: string;
+			name: string;
 		} & Omit<DefaultSession["user"], "image">;
 		jwt: string;
 	}
@@ -60,6 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 						groups: payload.groups,
 						phone_number: payload.phone_number,
 						jwt: access,
+						expires: payload.exp,
 					};
 				} catch (error) {
 					if (error instanceof ZodError || error instanceof UnauthorizedError) {
@@ -74,13 +76,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		jwt: async ({ token, user }) => {
 			if (user) {
 				// @ts-ignore
-				return { ...token, jwt: user.jwt };
+				return { ...token, jwt: user.jwt, expires: user.expires };
 			}
 			return token;
 		},
 		session: async ({ session, token }) => {
-			if (typeof token?.jwt === "string") {
-				session.jwt = token.jwt;
+			if (typeof token?.jwt === "string" && token?.expires) {
+				session = {
+					...session,
+					jwt: token.jwt,
+					// @ts-ignore
+					expires: new Date(token.expires),
+				};
 			}
 			return session;
 		},
