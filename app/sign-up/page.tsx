@@ -95,7 +95,7 @@ export default function SignUp() {
 									}}
 									{...register("phone_number")}
 									error={!!errors && "phone_number" in errors}
-									helperText={errors?.phone_number?.message}
+									helperText={errors?.phone_number?.message as string}
 								/>
 							</Grid>
 						</Grid>
