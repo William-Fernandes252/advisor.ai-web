@@ -87,7 +87,7 @@ export async function createReviewForPaper(
 		{ user: userId, paper: paper.id, ...review },
 		axiosInstance,
 	);
-	return redirect("/papers/");
+	return redirect("/");
 }
 
 /**
