@@ -95,3 +95,18 @@ export const signUpSchema = signInSchema
 	});
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;
+
+export const reviewCreateSchema = z.object({
+	value: z
+		.number({
+			required_error: "Value is required",
+			description: "Review value",
+		})
+		.min(1, "Value is required")
+		.max(5, "Value must be less than 5"),
+	comment: z.string({
+		description: "Review comment",
+	}),
+});
+
+export type ReviewCreateSchema = z.infer<typeof reviewCreateSchema>;

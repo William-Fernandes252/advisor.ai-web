@@ -20,6 +20,25 @@ type PaginatedResponse<T> = {
 	results: T[];
 };
 
+type OrderingParams<K> = {
+	/**
+	 * Ordenação dos itens.
+	 */
+	ordering?: K;
+};
+
+type LimitOffsetPaginationParams = {
+	/**
+	 * Índice do primeiro item.
+	 */
+	offset?: number;
+
+	/**
+	 * Número máximo de itens.
+	 */
+	limit?: number;
+};
+
 type ErrorResponse<T extends Record<string, unknown> = null> = T extends null
 	? {
 			/**

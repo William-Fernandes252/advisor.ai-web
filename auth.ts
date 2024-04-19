@@ -29,6 +29,7 @@ declare module "next-auth" {
 			name: string;
 		} & Omit<DefaultSession["user"], "image">;
 		jwt: string;
+		id: string;
 	}
 }
 
@@ -76,7 +77,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		jwt: async ({ token, user }) => {
 			if (user) {
 				// @ts-ignore
-				return { ...token, jwt: user.jwt, expires: user.expires };
+				return { ...token, jwt: user.jwt, expires: user.expires, id: user.id };
 			}
 			return token;
 		},
@@ -85,6 +86,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				session = {
 					...session,
 					jwt: token.jwt,
+					// @ts-ignore
+					id: token.id,
 					// @ts-ignore
 					expires: new Date(token.expires),
 				};
