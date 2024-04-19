@@ -29,9 +29,6 @@ dependencies:
   '@mui/material-nextjs':
     specifier: ^5.15.11
     version: 5.15.11(@emotion/cache@11.11.0)(@mui/material@5.15.15)(@types/react@18.2.78)(next@14.2.1)(react@18.2.0)
-  '@types/validator':
-    specifier: ^13.11.9
-    version: 13.11.9
   axios:
     specifier: ^1.6.8
     version: 1.6.8
@@ -79,6 +76,9 @@ devDependencies:
   '@testing-library/react':
     specifier: ^15.0.2
     version: 15.0.2(react-dom@18.2.0)(react@18.2.0)
+  '@types/jsonwebtoken':
+    specifier: ^9.0.6
+    version: 9.0.6
   '@types/node':
     specifier: ^20
     version: 20.12.7
@@ -88,6 +88,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18
     version: 18.2.25
+  '@types/validator':
+    specifier: ^13.11.9
+    version: 13.11.9
   '@vitejs/plugin-react':
     specifier: ^4.2.1
     version: 4.2.1(vite@5.2.8)
@@ -295,6 +298,14 @@ packages:
       '@babel/core': 7.24.4
       '@babel/helper-plugin-utils': 7.24.0
     dev: true
+
+  /@babel/runtime-corejs3@7.24.4:
+    resolution: {integrity: sha512-VOQOexSilscN24VEY810G/PqtpFvx/z6UqDIjIWbDe2368HhDLkYN5TYwaEz/+eRCUkhJ2WaNLLmQAlxzfWj4w==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      core-js-pure: 3.37.0
+      regenerator-runtime: 0.14.1
+    dev: false
 
   /@babel/runtime@7.24.4:
     resolution: {integrity: sha512-dkxf7+hn8mFBwKjs9bvBlArzLVxVbS8usaPUDd5p2a9JCL9tB8OaOVN1isD4+Xyk4ns89/xeOmbQvgdK7IIVdA==}
@@ -1348,6 +1359,12 @@ packages:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
 
+  /@types/jsonwebtoken@9.0.6:
+    resolution: {integrity: sha512-/5hndP5dCjloafCXns6SZyESp3Ldq7YjH3zwzwczYnjxIT0Fqzk5ROSYVGfFyczIue7IUEj8hkvLbPoLQ18vQw==}
+    dependencies:
+      '@types/node': 20.12.7
+    dev: true
+
   /@types/node@20.12.7:
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
     dependencies:
@@ -1637,6 +1654,11 @@ packages:
   /cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /core-js-pure@3.37.0:
+    resolution: {integrity: sha512-d3BrpyFr5eD4KcbRvQ3FTUx/KWmaDesr7+a3+1+P46IUnNoEt+oiLijPINZMEon7w9oGkIINWxrBAU9DEciwFQ==}
+    requiresBuild: true
     dev: false
 
   /cosmiconfig@7.1.0:
