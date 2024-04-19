@@ -2,59 +2,52 @@ import { createFromAxiosError } from "@/errors/http";
 import type { AxiosError, AxiosInstance } from "axios";
 import { parseParams } from "./_utils";
 
-export type GetPaperListParams = Partial<{
-	/**
-	 * O índice do primeiro item a ser retornado.
-	 */
-	offset: number;
+export type GetPaperListParams = Partial<
+	{
+		/**
+		 * O país de origem do artigo.
+		 */
+		country: string;
 
-	/**
-	 * O número máximo de itens a serem retornados.
-	 */
-	limit: number;
+		/**
+		 * O campo pelo qual a lista de artigos será ordenada.
+		 *
+		 * Para ordenar de forma decrescente, adicione um hífen (-) antes do campo.
+		 */
+		ordering: keyof PaperList | "score" | `-${keyof PaperList}` | "-score";
 
-	/**
-	 * O país de origem do artigo.
-	 */
-	country: string;
+		/**
+		 * Palavras-chave que devem estar presentes no artigo.
+		 */
+		keywords: string[];
 
-	/**
-	 * O campo pelo qual a lista de artigos será ordenada.
-	 *
-	 * Para ordenar de forma decrescente, adicione um hífen (-) antes do campo.
-	 */
-	ordering: keyof PaperList | "score" | `-${keyof PaperList}` | "-score";
+		/**
+		 * Buscar por autores.
+		 */
+		authors: string[];
 
-	/**
-	 * Palavras-chave que devem estar presentes no artigo.
-	 */
-	keywords: string[];
+		/**
+		 * Data base de publicação do artigo.
+		 */
+		published_after: Date;
 
-	/**
-	 * Buscar por autores.
-	 */
-	authors: string[];
+		/**
+		 * Data limite de publicação do artigo.
+		 */
+		published_before: Date;
 
-	/**
-	 * Data base de publicação do artigo.
-	 */
-	published_after: Date;
+		/**
+		 * Busca pelo conteúdo do artigo.
+		 */
+		search: string;
 
-	/**
-	 * Data limite de publicação do artigo.
-	 */
-	published_before: Date;
-
-	/**
-	 * Busca pelo conteúdo do artigo.
-	 */
-	search: string;
-
-	/**
-	 * Busca pelo título do artigo.
-	 */
-	title: string;
-}>;
+		/**
+		 * Busca pelo título do artigo.
+		 */
+		title: string;
+	} & LimitOffsetPaginationParams &
+		OrderingParams<keyof PaperList | "score" | `-${keyof PaperList}` | "-score">
+>;
 
 export type Location = {
 	/**
@@ -94,7 +87,7 @@ export type PaperList = {
 	/**
 	 * O ID do artigo.
 	 */
-	id: number;
+	id: string;
 
 	/**
 	 * O título do artigo.

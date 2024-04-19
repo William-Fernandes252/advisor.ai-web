@@ -25,6 +25,7 @@ export default function PaperCard({ paper, ...props }: PaperCardProps) {
 					justifyContent: "start",
 					width: "100%",
 				}}
+				href={`/papers/${paper.id}`}
 			>
 				<CardContent
 					sx={{
