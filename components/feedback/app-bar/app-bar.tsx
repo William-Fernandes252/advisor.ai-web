@@ -44,7 +44,7 @@ const pages: Page[] = [
 	},
 	{
 		label: "Papers",
-		href: "/papers",
+		href: "/",
 		icon: <LibraryBooks />,
 	},
 ];

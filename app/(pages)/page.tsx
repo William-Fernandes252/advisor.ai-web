@@ -1,79 +1,34 @@
-import {
-	getPapersSuggestionsForCurrentUser,
-	getPopularPapers,
-	type listPapers,
-} from "@/app/actions/papers";
-import { auth } from "@/auth";
+import { listPapers } from "@/app/actions/papers";
 import PaperCard from "@/components/feedback/paper-card";
+import PaperSearchForm from "@/components/forms/paper-search-form";
 import Page from "@/components/layout/page";
-import { Search } from "@mui/icons-material";
-import {
-	Box,
-	Divider,
-	Grid,
-	InputAdornment,
-	Paper,
-	Stack,
-	TextField,
-	Typography,
-} from "@mui/material";
-import type { Session } from "next-auth";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 
-export default async function Home() {
-	const { results: suggestions } = await getPapersSuggestionsForCurrentUser();
-	const { results: popular } = await getPopularPapers();
-	const { user } = (await auth()) as Session;
+export default async function Papers({
+	searchParams,
+}: {
+	searchParams: {
+		[key: string]: string | string[] | undefined;
+	};
+}) {
+	const { results } = await listPapers(searchParams);
 	return (
-		<Page flex={1} sx={{ p: 0 }}>
-			<Box p={3} mx={6}>
-				<Typography variant="h3" color="primary.main" p={3}>
-					Welcome back, {user.name}
+		<Page flex={1}>
+			<Box py={3} mx={3}>
+				<Typography variant="h5" mb={1}>
+					{searchParams.search
+						? `Search results for "${searchParams.search}"`
+						: "All papers"}
 				</Typography>
-				<form action="/papers" method="GET">
-					<TextField
-						type="search"
-						name="search"
-						label="Search"
-						helperText="Search for articles by title, content or field of study"
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position="start" variant="standard">
-									<Search />
-								</InputAdornment>
-							),
-						}}
-					/>
-				</form>
+				<PaperSearchForm defaultValue={searchParams.search} />
 			</Box>
-			<Stack p={6} spacing={4}>
-				<PapersSection title="Suggested for you" papers={suggestions} />
-				<PapersSection title="Popular" papers={popular} />
+			<Stack px={3} pb={3} spacing={2}>
+				{results.map((paper) => (
+					<Paper elevation={4}>
+						<PaperCard paper={paper} />
+					</Paper>
+				))}
 			</Stack>
 		</Page>
-	);
-}
-
-type PapersSectionProps = {
-	title: string;
-	papers: Awaited<ReturnType<typeof listPapers>>["results"];
-};
-
-function PapersSection({ title, papers }: PapersSectionProps) {
-	return (
-		<Box>
-			<Typography variant="h4" my={1}>
-				{title}
-			</Typography>
-			<Divider sx={{ my: 2 }} />
-			<Grid container spacing={2}>
-				{papers.map((paper) => (
-					<Grid item xs={12} sm={6} md={4}>
-						<Paper elevation={4}>
-							<PaperCard paper={paper} />
-						</Paper>
-					</Grid>
-				))}
-			</Grid>
-		</Box>
 	);
 }

@@ -5,7 +5,7 @@ type PaperSearchFieldProps = {} & TextFieldProps;
 
 export default function PaperSearchForm(props: PaperSearchFieldProps) {
 	return (
-		<form action="/papers" method="GET">
+		<form action="/" method="GET">
 			<TextField
 				type="search"
 				name="search"

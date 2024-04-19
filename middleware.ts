@@ -10,5 +10,5 @@ export default auth((request) => {
 });
 
 export const config = {
-	matcher: ["/"],
+	matcher: ["/dashboard"],
 };
