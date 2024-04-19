@@ -28,5 +28,5 @@ export async function register(data: SignUpSchema): Promise<never> {
  * @throws {CredentialsSignin} Se as credenciais estiverem incorretas.
  */
 export async function login(data: SignInSchema): Promise<void> {
-	await signIn("credentials", { ...data, redirectTo: "/" });
+	await signIn("credentials", { ...data, redirectTo: "/dashboard" });
 }
