@@ -18,11 +18,11 @@ import { useForm } from "react-hook-form";
 
 type ReviewFormProps = {
 	paper: PaperList;
-	userId: string;
+	userId: string | null;
 };
 
 export default function ReviewForm({ paper, userId }: ReviewFormProps) {
-	const { register, handleSubmit, control } = useForm<ReviewCreateSchema>({
+	const { register, handleSubmit } = useForm<ReviewCreateSchema>({
 		resolver: zodResolver(reviewCreateSchema),
 		defaultValues: {
 			value: 0,

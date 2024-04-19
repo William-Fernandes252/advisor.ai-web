@@ -14,13 +14,12 @@ import {
 	Stack,
 	Typography,
 } from "@mui/material";
-import type { Session } from "next-auth";
 import NextLink from "next/link";
 
 export default async function PaperDetail({
 	params,
 }: { params: { id: string } }) {
-	const { id } = (await auth()) as Session;
+	const session = await auth();
 	const paper = await detailPaper(params.id);
 	const { results: reviews } = await getReviewsForPaper(params.id);
 
@@ -68,7 +67,7 @@ export default async function PaperDetail({
 				<Card>
 					<CardHeader title="What did you think about the article?" />
 					<CardContent>
-						<ReviewForm paper={paper} userId={id} />
+						<ReviewForm paper={paper} userId={session?.id || null} />
 					</CardContent>
 				</Card>
 			</Stack>

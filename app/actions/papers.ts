@@ -75,10 +75,14 @@ export async function getReviewsForPaper(id: string) {
 }
 
 export async function createReviewForPaper(
-	userId: string,
+	userId: string | null,
 	paper: PaperList,
 	review: ReviewCreateSchema,
 ): Promise<never> {
+	if (!userId) {
+		return redirect("/login/");
+	}
+
 	await withHttpErrorHandling(postReviewCreate)(
 		{ user: userId, paper: paper.id, ...review },
 		axiosInstance,
